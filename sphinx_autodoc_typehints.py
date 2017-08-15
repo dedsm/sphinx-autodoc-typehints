@@ -31,10 +31,14 @@ except ImportError:
 
 
 def format_annotation(annotation):
+    print("#"*60)
+    print(annotation)
     if inspect.isclass(annotation) and annotation.__module__ == 'builtins':
         if annotation.__qualname__ == 'NoneType':
+            print('36 ``None``')
             return '``None``'
         else:
+            print('39 :py:class:`{}`'.format(annotation.__qualname__))
             return ':py:class:`{}`'.format(annotation.__qualname__)
 
     annotation_cls = annotation if inspect.isclass(annotation) else type(annotation)
@@ -44,10 +48,13 @@ def format_annotation(annotation):
         extra = ''
         class_name = annotation_cls.__qualname__
         if annotation is Any:
+            print(':py:data:`~typing.Any`')
             return ':py:data:`~typing.Any`'
         elif annotation is AnyStr:
+            print(':py:data:`~typing.AnyStr`')
             return ':py:data:`~typing.AnyStr`'
         elif isinstance(annotation, TypeVar):
+            print('\\%r' % annotation)
             return '\\%r' % annotation
         elif class_name in ('Union', '_Union'):
             prefix = ':py:data:'
@@ -95,8 +102,10 @@ def format_annotation(annotation):
         if params:
             extra = '\\[{}]'.format(', '.join(format_annotation(param) for param in params))
 
+        print('{}`~typing.{}`{}'.format(prefix, class_name, extra))
         return '{}`~typing.{}`{}'.format(prefix, class_name, extra)
     elif annotation is Ellipsis:
+        print('...')
         return '...'
     elif inspect.isclass(annotation):
         extra = ''
@@ -104,8 +113,10 @@ def format_annotation(annotation):
             extra = '\\[{}]'.format(', '.join(format_annotation(param)
                                               for param in annotation.__parameters__))
 
+        print(':py:class:`~{}.{}`{}'.format(annotation.__module__, annotation.__qualname__, extra))
         return ':py:class:`~{}.{}`{}'.format(annotation.__module__, annotation.__qualname__, extra)
     else:
+        print(str(annotation))
         return str(annotation)
 
 
