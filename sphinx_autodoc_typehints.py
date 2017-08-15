@@ -48,13 +48,13 @@ def format_annotation(annotation):
         extra = ''
         class_name = annotation_cls.__qualname__
         if annotation is Any:
-            print(':py:data:`~typing.Any`')
+            print('51 :py:data:`~typing.Any`')
             return ':py:data:`~typing.Any`'
         elif annotation is AnyStr:
-            print(':py:data:`~typing.AnyStr`')
+            print('54 :py:data:`~typing.AnyStr`')
             return ':py:data:`~typing.AnyStr`'
         elif isinstance(annotation, TypeVar):
-            print('\\%r' % annotation)
+            print('57 \\%r' % annotation)
             return '\\%r' % annotation
         elif class_name in ('Union', '_Union'):
             prefix = ':py:data:'
@@ -102,10 +102,10 @@ def format_annotation(annotation):
         if params:
             extra = '\\[{}]'.format(', '.join(format_annotation(param) for param in params))
 
-        print('{}`~typing.{}`{}'.format(prefix, class_name, extra))
+        print('105 {}`~typing.{}`{}'.format(prefix, class_name, extra))
         return '{}`~typing.{}`{}'.format(prefix, class_name, extra)
     elif annotation is Ellipsis:
-        print('...')
+        print('108 ...')
         return '...'
     elif inspect.isclass(annotation):
         extra = ''
@@ -113,7 +113,7 @@ def format_annotation(annotation):
             extra = '\\[{}]'.format(', '.join(format_annotation(param)
                                               for param in annotation.__parameters__))
 
-        print(':py:class:`~{}.{}`{}'.format(annotation.__module__, annotation.__qualname__, extra))
+        print('116 :py:class:`~{}.{}`{}'.format(annotation.__module__, annotation.__qualname__, extra))
         return ':py:class:`~{}.{}`{}'.format(annotation.__module__, annotation.__qualname__, extra)
     else:
         print(str(annotation))
